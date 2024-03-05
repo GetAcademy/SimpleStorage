@@ -11,13 +11,14 @@ while (isRunning)
     Console.WriteLine("5. Avslutt");
     Console.Write("Velg en handling: ");
     var action = Console.ReadLine();
-
+    Console.Clear();
     if (action == "1") AddProduct();
     else if (action == "2") RemoveProduct();
     else if (action == "3") SearchProduct();
     else if (action == "4") ListAllProducts();
     else if (action == "5") isRunning = false;
     else Console.WriteLine("Ugyldig valg, prøv igjen.");
+    Console.WriteLine();
 
 }
 
@@ -55,15 +56,13 @@ void SearchProduct()
 {
     Console.Write("Skriv inn product id eller nam som du vil søke etter: ");
     var input = Console.ReadLine();
-    int id;
-    var results = int.TryParse(input, out id)
-        ? inventory.Where(p => p.ID == id).ToList()
-        : inventory.Where(p => p.Name.Contains(input)).ToList();
+    var isId = int.TryParse(input, out int id);
+    var products = inventory.Where(p => isId && p.ID == id || p.Name.Contains(input)).ToList();
 
-    if (results.Any())
+    if (products.Any())
     {
         Console.WriteLine("Funnet produkter:");
-        foreach (var product in results)
+        foreach (var product in products)
         {
             Console.WriteLine($"ID: {product.ID}, Navn: {product.Name}");
         }
