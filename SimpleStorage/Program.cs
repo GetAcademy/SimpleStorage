@@ -25,10 +25,10 @@ void AddProduct()
 {
     var product = new Product();
 
-    Console.Write("Enter Product ID: ");
+    Console.Write("Skriv inn product id: ");
     product.ID = Convert.ToInt32(Console.ReadLine());
 
-    Console.Write("Enter Product Name: ");
+    Console.Write("Skriv inn produkt navn: ");
     product.Name = Console.ReadLine();
 
     inventory.Add(product);
@@ -37,7 +37,7 @@ void AddProduct()
 
 void RemoveProduct()
 {
-    Console.Write("Enter Product ID to Remove: ");
+    Console.Write("Skriv inn product id som skal fjernes: ");
     int id = Convert.ToInt32(Console.ReadLine());
     var product = inventory.FirstOrDefault(p => p.ID == id);
     if (product != null)
@@ -53,12 +53,12 @@ void RemoveProduct()
 
 void SearchProduct()
 {
-    Console.Write("Enter Product Name or ID to Search: ");
+    Console.Write("Skriv inn product id eller nam som du vil søke etter: ");
     var input = Console.ReadLine();
     int id;
-    List<Product> results = int.TryParse(input, out id)
+    var results = int.TryParse(input, out id)
         ? inventory.Where(p => p.ID == id).ToList()
-        : inventory.Where(p => p.Name.Contains(input, StringComparison.OrdinalIgnoreCase)).ToList();
+        : inventory.Where(p => p.Name.Contains(input)).ToList();
 
     if (results.Any())
     {
